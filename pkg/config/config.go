@@ -35,6 +35,7 @@ type GiteaURLs struct {
 
 // Repo represents any kind of repo (github, gitlab, etc)
 type Repo struct {
+	ID    string `yaml:"id,omitempty"`
 	Owner string `yaml:",omitempty"`
 	Name  string `yaml:",omitempty"`
 }

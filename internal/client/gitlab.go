@@ -59,6 +59,9 @@ func (c *gitlabClient) CreateFile(
 	opts := &gitlab.GetFileOptions{Ref: &ref}
 	castedContent := string(content)
 	projectID := repo.Owner + "/" + repo.Name
+	if ctx.Config.Release.GitLab.ID != "" {
+		projectID = ctx.Config.Release.GitLab.ID
+	}
 
 	log.WithFields(log.Fields{
 		"owner": repo.Owner,
@@ -161,6 +164,10 @@ func (c *gitlabClient) CreateRelease(ctx *context.Context, body string) (release
 	}
 
 	projectID := ctx.Config.Release.GitLab.Owner + "/" + ctx.Config.Release.GitLab.Name
+	if ctx.Config.Release.GitLab.ID != "" {
+		projectID = ctx.Config.Release.GitLab.ID
+	}
+
 	log.WithFields(log.Fields{
 		"owner": ctx.Config.Release.GitLab.Owner,
 		"name":  ctx.Config.Release.GitLab.Name,
@@ -233,6 +240,9 @@ func (c *gitlabClient) Upload(
 	file *os.File,
 ) error {
 	projectID := ctx.Config.Release.GitLab.Owner + "/" + ctx.Config.Release.GitLab.Name
+	if ctx.Config.Release.GitLab.ID != "" {
+		projectID = ctx.Config.Release.GitLab.ID
+	}
 
 	log.WithField("file", file.Name()).Debug("uploading file")
 	projectFile, _, err := c.client.Projects.UploadFile(

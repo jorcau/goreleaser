@@ -50,7 +50,7 @@ func (Pipe) Default(ctx *context.Context) error {
 	switch ctx.TokenType {
 	case context.TokenTypeGitLab:
 		{
-			if ctx.Config.Release.GitLab.Name == "" {
+			if ctx.Config.Release.GitLab.Name == "" && ctx.Config.Release.GitLab.ID == "" {
 				repo, err := remoteRepo()
 				if err != nil {
 					return err

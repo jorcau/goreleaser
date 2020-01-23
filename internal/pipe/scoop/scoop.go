@@ -147,6 +147,13 @@ func buildManifest(ctx *context.Context, artifacts []*artifact.Artifact) (bytes.
 				ctx.Config.Release.GitLab.Owner,
 				ctx.Config.Release.GitLab.Name,
 			)
+			if ctx.Config.Release.GitLab.ID != "" {
+				ctx.Config.Scoop.URLTemplate = fmt.Sprintf(
+					"%s/%s/uploads/{{ .ArtifactUploadHash }}/{{ .ArtifactName }}",
+					ctx.Config.GitLabURLs.Download,
+					ctx.Config.Release.GitLab.ID,
+				)
+			}
 		default:
 			return result, ErrTokenTypeNotImplementedForScoop
 		}

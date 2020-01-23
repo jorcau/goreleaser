@@ -248,6 +248,13 @@ func dataFor(ctx *context.Context, cfg config.Homebrew, tokenType context.TokenT
 					ctx.Config.Release.GitLab.Owner,
 					ctx.Config.Release.GitLab.Name,
 				)
+				if ctx.Config.Release.GitLab.ID != "" {
+					cfg.URLTemplate = fmt.Sprintf(
+						"%s/%s/uploads/{{ .ArtifactUploadHash }}/{{ .ArtifactName }}",
+						ctx.Config.GitLabURLs.Download,
+						ctx.Config.Release.GitLab.ID,
+					)
+				}
 			default:
 				return result, ErrTokenTypeNotImplementedForBrew
 			}
